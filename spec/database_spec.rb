@@ -6,6 +6,11 @@ require './spec/spec_helper'
 #     user = User.new("jon","123","abc")
 #     expect(user.name).to eq('jon')
 #   end
+describe 'Database' do
+
+  before do
+    @db = Moodeo.db
+  end
 
   describe "Persistence" do
     before do
