@@ -130,9 +130,6 @@ module Moodeo
       # session
     end
 
-    def get_user_by_session(sid)
-      @sessions[sid].user_id
-    end
 
 	end
 end
