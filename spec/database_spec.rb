@@ -14,7 +14,7 @@ describe 'Database' do
 
   describe "Persistence" do
     before do
-      @user1 = @db.create_user('Jose', 'joser1', '123')
+      @user1 = @db.create_user('Jose', 'joser123', '123')
       @user2 = @db.create_user('Drew', 'drewv33', 'abc')
     end
 

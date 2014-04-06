@@ -41,6 +41,9 @@ module Moodeo
 
       # Since we are selecting by id, and ids are UNIQUE, we can assume only ONE row is returned
       data = rows.first
+      if data == nil
+        return nil
+      else
 
       # Create a convenient User object based on the data given to us by SQLite
       user = User.new(data[1], data[2], data[3])
@@ -49,19 +52,38 @@ module Moodeo
       # OLD METHOD
       # @users[uid]
     end
+    end
 
     def get_user_by_username(username)
       rows = @sqlite.execute("SELECT * FROM users WHERE username = ?", username)
 
       # Since we are selecting by id, and ids are UNIQUE, we can assume only ONE row is returned
       data = rows.first
+      if data == nil
+        return nil
+      else
 
-      # Create a convenient User object based on the data given to us by SQLite
-      user = User.new(data[1], data[2], data[3])
-      user.id = data[0]
-      user
-      # OLD METHOD
-      # @users[uid]
+        # Create a convenient User object based on the data given to us by SQLite
+        user = User.new(data[1], data[2], data[3])
+        user.id = data[0]
+        user
+        # OLD METHOD
+        # @users[uid]
+      end
+    end
+
+    def get_user_by_session(sid)
+      rows = @sqlite.execute("SELECT * FROM sessions WHERE id = ?", sid)
+
+      # Since we are selecting by id, and ids are UNIQUE, we can assume only ONE row is returned
+      data = rows.first
+
+        # Create a convenient User object based on the data given to us by SQLite
+        session = Session.new(data[1])
+        session.id = data[0]
+        session
+        # OLD METHOD
+        # @users[uid]
     end
 
     def show_all_users
