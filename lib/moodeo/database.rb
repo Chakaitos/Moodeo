@@ -88,5 +88,9 @@ module Moodeo
      @sqlite.execute("DELETE FROM friendships")
     end
 
+    def sign_in(username, password)
+
+    end
+
 	end
 end
