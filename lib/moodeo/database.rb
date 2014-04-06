@@ -77,6 +77,9 @@ module Moodeo
 
       # Since we are selecting by id, and ids are UNIQUE, we can assume only ONE row is returned
       data = rows.first
+      if data == nil
+        return nil
+      else
 
         # Create a convenient User object based on the data given to us by SQLite
         session = Session.new(data[1])
@@ -84,6 +87,7 @@ module Moodeo
         session
         # OLD METHOD
         # @users[uid]
+      end
     end
 
     def show_all_users
