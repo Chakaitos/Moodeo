@@ -1,4 +1,4 @@
-require './spec/spec_helper'
+require './spec/spec_helper.rb'
 
 # describe 'user' do
 #   it "initializes a user with a name,username,and password" do
@@ -46,6 +46,7 @@ describe 'Database' do
       expect(password).to include(@user1.password)
 
       # get user by username
+      # binding.pry
       user_id = sql_db.get_user_by_username(@user1.username).instance_eval(&:id)
       user_name = sql_db.get_user_by_username(@user1.username).instance_eval(&:name)
       user_password = sql_db.get_user_by_username(@user1.username).instance_eval(&:password)

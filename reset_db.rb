@@ -24,8 +24,17 @@ sqlite.execute %q{
 sqlite.execute %q{
   CREATE TABLE friendships (
     id          			INTEGER 			PRIMARY KEY,
-    user_source_id    VARCHAR(20)   NOT NULL,
-    user_target_id		VARCHAR(20)		NOT NULL
+    user_source_id    INT           NOT NULL,
+    user_target_id		INT		         NOT NULL,
+    FOREIGN KEY(user_source_id) REFERENCES users(id),
+    FOREIGN KEY(user_target_id) REFERENCES users(id)
+  );
+}
+sqlite.execute %q{
+  CREATE TABLE sessions (
+    id                INTEGER       PRIMARY KEY,
+    user_id           INT           NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES users(id)
   );
 }
 

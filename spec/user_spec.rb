@@ -1,4 +1,4 @@
-require './spec/spec_helper'
+require './spec/spec_helper.rb'
 
 describe 'user' do
  it "initializes a user with a name,username,and password" do

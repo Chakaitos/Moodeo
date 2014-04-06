@@ -42,7 +42,7 @@ module Moodeo
       # Since we are selecting by id, and ids are UNIQUE, we can assume only ONE row is returned
       data = rows.first
 
-      # Create a convenient Project object based on the data given to us by SQLite
+      # Create a convenient User object based on the data given to us by SQLite
       user = User.new(data[1], data[2], data[3])
       user.id = data[0]
       user
@@ -51,13 +51,12 @@ module Moodeo
     end
 
     def get_user_by_username(username)
-      # Pro Tip: Always try SQL statements in the terminal first
       rows = @sqlite.execute("SELECT * FROM users WHERE username = ?", username)
 
       # Since we are selecting by id, and ids are UNIQUE, we can assume only ONE row is returned
       data = rows.first
 
-      # Create a convenient Project object based on the data given to us by SQLite
+      # Create a convenient User object based on the data given to us by SQLite
       user = User.new(data[1], data[2], data[3])
       user.id = data[0]
       user
@@ -86,10 +85,31 @@ module Moodeo
     def clear_all_records
      @sqlite.execute("DELETE FROM users")
      @sqlite.execute("DELETE FROM friendships")
+     @sqlite.execute("DELETE FROM sessions")
     end
 
     def sign_in(username, password)
 
+    end
+
+    #SESSION METHODS
+    def create_session(uid)
+      session = Session.new(uid)
+      @sqlite.execute("INSERT INTO sessions (user_id) VALUES (?);", uid)
+
+      # This is needed so other code can access the id of the user we just created
+      session.id = @sqlite.execute("SELECT last_insert_rowid()")[0][0]
+
+      # Return a User object, just like in the old method
+      session
+
+      # OLD METHOD
+      # session = Session.new(uid)
+      # session
+    end
+
+    def get_user_by_session(sid)
+      @sessions[sid].user_id
     end
 
 	end

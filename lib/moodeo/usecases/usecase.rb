@@ -1,6 +1,6 @@
 require 'ostruct'
 
-module RPS
+module Moodeo
  class UseCase
      # Convenience method that lets us call `.run` directly on the class
      def self.run(inputs)

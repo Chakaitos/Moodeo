@@ -1,7 +1,7 @@
 require 'sqlite3'
 
 class Session
-attr_reader :id, :user_id
+attr_accessor :id, :user_id
  @@counter = 0
    def initialize(user_id)
     @@counter += 1

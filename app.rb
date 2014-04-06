@@ -13,6 +13,5 @@ get '/signup' do
   @name = params[:name]
   @username = params[:username]
   @password = params[:password]
-  @password2 = params[:password2]
   erb :signup
 end
