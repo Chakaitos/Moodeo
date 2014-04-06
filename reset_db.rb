@@ -25,6 +25,14 @@ sqlite.execute %q{
   CREATE TABLE friendships (
     id          			INTEGER 			PRIMARY KEY,
     user_source_id    VARCHAR(20)   NOT NULL,
-    user_source_id		VARCHAR(20)		NOT NULL
+    user_target_id		VARCHAR(20)		NOT NULL
   );
 }
+
+def clear_all_records
+  @sqlite.execute("DELETE FROM users")
+  @sqlite.execute("DELETE FROM friendships")
+end
+
+puts "Database Schema:\n\n"
+puts `echo .schema | sqlite3 #{db_name}`

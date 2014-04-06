@@ -14,7 +14,6 @@ describe 'Database' do
 
   describe "Persistence" do
     before do
-      binding.pry
       @user1 = @db.create_user('Jose', 'joser1', '123')
       @user2 = @db.create_user('Drew', 'drewv33', 'abc')
     end
@@ -38,20 +37,20 @@ describe 'Database' do
       expect(passwords).to include(@user1.password, @user2.password)
 
       # get individual user
-      name = sql_db.get_user(@user1.id).map(&:name)
-      username = sql_db.get_user(@user1.id).map(&:username)
-      password = sql_db.get_user(@user1.id).map(&:password)
+      name = sql_db.get_user(@user1.id).instance_eval(&:name)
+      username = sql_db.get_user(@user1.id).instance_eval(&:username)
+      password = sql_db.get_user(@user1.id).instance_eval(&:password)
 
       expect(name).to include(@user1.name)
       expect(username).to include(@user1.username)
       expect(password).to include(@user1.password)
 
       # get user by username
-      user_id = sql_db.get_user_by_username(@user1.username).map(&:id)
-      user_name = sql_db.get_user_by_username(@user1.username).map(&:name)
-      user_password = sql_db.get_user_by_username(@user1.username).map(&:password)
+      user_id = sql_db.get_user_by_username(@user1.username).instance_eval(&:id)
+      user_name = sql_db.get_user_by_username(@user1.username).instance_eval(&:name)
+      user_password = sql_db.get_user_by_username(@user1.username).instance_eval(&:password)
 
-      expect(user_id).to include(@user1.id)
+      expect(user_id).to eq(@user1.id)
       expect(user_name).to include(@user1.name)
       expect(user_password).to include(@user1.password)
     end

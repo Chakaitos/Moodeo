@@ -15,7 +15,7 @@ module Moodeo
 
       # This creates a connection to our database file
       @sqlite = SQLite3::Database.new(db_name)
-			@users = {}
+			# @users = {}
 		end
 
 		# Create methods - CRUD
@@ -34,5 +34,59 @@ module Moodeo
 			# @users[user.id.to_i] = user
 			# user
 		end
+
+    def get_user(uid)
+      # Pro Tip: Always try SQL statements in the terminal first
+      rows = @sqlite.execute("SELECT * FROM users WHERE id = ?", uid)
+
+      # Since we are selecting by id, and ids are UNIQUE, we can assume only ONE row is returned
+      data = rows.first
+
+      # Create a convenient Project object based on the data given to us by SQLite
+      user = User.new(data[1], data[2], data[3])
+      user.id = data[0]
+      user
+      # OLD METHOD
+      # @users[uid]
+    end
+
+    def get_user_by_username(username)
+      # Pro Tip: Always try SQL statements in the terminal first
+      rows = @sqlite.execute("SELECT * FROM users WHERE username = ?", username)
+
+      # Since we are selecting by id, and ids are UNIQUE, we can assume only ONE row is returned
+      data = rows.first
+
+      # Create a convenient Project object based on the data given to us by SQLite
+      user = User.new(data[1], data[2], data[3])
+      user.id = data[0]
+      user
+      # OLD METHOD
+      # @users[uid]
+    end
+
+    def show_all_users
+      result = @sqlite.execute("SELECT * FROM users")
+
+      # Here we convert our array of **data arrays** into an array of convenient User objects.
+      # Due to Ruby's implicit returns, the new array gets returned.
+      result.map do |row|
+        # `row` is an array of data. Example: [1, 'Alice', 'abc123']
+        # You can discover the column order by looking at your table schema
+        # For example:
+        #   $ sqlite3 rps_test.db
+        #   sqlite> .schema users
+        #
+        user = User.new(row[1], row[2], row[3])
+        user.id = row[0]
+        user
+      end
+    end
+
+    def clear_all_records
+     @sqlite.execute("DELETE FROM users")
+     @sqlite.execute("DELETE FROM friendships")
+    end
+
 	end
 end

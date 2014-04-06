@@ -1,7 +1,7 @@
 require './lib/moodeo.rb'
 require 'pry-debugger'
 
-# Moodeo.db_name = 'moodeo.db'
+Moodeo.db_name = 'moodeo.db'
 
 RSpec.configure do |config|
 config.before(:each) do
@@ -10,7 +10,7 @@ config.before(:each) do
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
   # NEW: This clears your tables so you get fresh tables for every test
   # Please READ THE METHOD yourself in database.rb
-  # Moodeo.db.clear_all_records
+  Moodeo.db.clear_all_records
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
   end
 end
