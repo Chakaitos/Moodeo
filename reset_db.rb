@@ -29,10 +29,5 @@ sqlite.execute %q{
   );
 }
 
-def clear_all_records
-  @sqlite.execute("DELETE FROM users")
-  @sqlite.execute("DELETE FROM friendships")
-end
-
 puts "Database Schema:\n\n"
 puts `echo .schema | sqlite3 #{db_name}`
