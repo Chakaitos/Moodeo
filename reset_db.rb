@@ -44,7 +44,7 @@ sqlite.execute %q{
     id                INTEGER       PRIMARY KEY,
     source_id           INT           NOT NULL,
     target_id           INT           NOT NULL,
-    status              TEXT          NOT NULL,
+    status              TEXT,
     FOREIGN KEY(source_id) REFERENCES users(id),
     FOREIGN KEY(target_id) REFERENCES users(id)
   );
