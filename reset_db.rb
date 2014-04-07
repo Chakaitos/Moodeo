@@ -14,6 +14,8 @@ sqlite.execute %q{DROP TABLE IF EXISTS friendships}
 sqlite.execute %q{DROP TABLE IF EXISTS sessions}
 sqlite.execute %q{DROP TABLE IF EXISTS friend_requests}
 sqlite.execute %q{DROP TABLE IF EXISTS videos}
+sqlite.execute %q{DROP TABLE IF EXISTS video_requests}
+sqlite.execute %q{DROP TABLE IF EXISTS video_sessions}
 
 puts "Creating tables..."
 sqlite.execute %q{
