@@ -8,9 +8,9 @@
     <h1>Sign In</h1>
       <form method='post' action='/signin'>
         <input type='text' name='username'></input>
-        <input type='text' name='password'></input>
+        <input type='password' name='password'></input>
         <input type='submit' value='signin'>
-        <%= @message %>
+        <p><%= @message %></p>
       </form>
     </body>
 </html>
