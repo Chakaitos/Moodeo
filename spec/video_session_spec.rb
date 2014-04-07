@@ -6,7 +6,8 @@ describe 'VideoSession' do
     jo = User.new('jo','joe','123')
     mo = User.new('mo','moe','123')
     opentok_id = "someshit"
-    session = VideoSession.new(jo.id, mo.id, opentok_id)
+    token = "somemoreshit"
+    session = VideoSession.new(jo.id, mo.id, opentok_id, token)
     expect(session.user1_id).to eq(jo.id)
     expect(session.user2_id).to eq(mo.id)
   end

@@ -195,10 +195,10 @@ module Moodeo
       end
     end
 
-    def create_video_session (user1_id, user2_id, opentok_id)
-      video_session = VideoSession.new(user1_id, user2_id, opentok_id)
+    def create_video_session (user1_id, user2_id, opentok_id, token)
+      video_session = VideoSession.new(user1_id, user2_id, opentok_id, token)
       # binding.pry
-      @sqlite.execute("INSERT INTO video_sessions (user_source_id, user_target_id, opentok_id) VALUES (?,?,?);", user1_id, user2_id, opentok_id)
+      @sqlite.execute("INSERT INTO video_sessions (user_source_id, user_target_id, opentok_id, tokbox_token) VALUES (?,?,?,?);", user1_id, user2_id, opentok_id, token)
       video_session.id = @sqlite.execute("SELECT last_insert_rowid()")[0][0]
 
       video_session

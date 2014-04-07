@@ -80,8 +80,7 @@ sqlite.execute %q{
     id               INTEGER       PRIMARY KEY,
     user_source_id    INT           NOT NULL,
     user_target_id    INT           NOT NULL,
-    tokbox_token_source    TEXT,
-    tokbox_token_target    TEXT,
+    tokbox_token     TEXT,
     opentok_id            TEXT      NOT NULL,
     FOREIGN KEY(user_source_id) REFERENCES users(id),
     FOREIGN KEY(user_target_id) REFERENCES users(id)

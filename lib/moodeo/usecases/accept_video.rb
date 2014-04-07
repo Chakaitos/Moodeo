@@ -19,15 +19,19 @@ module Moodeo
       user1 = @db.get_user(request.inviter_id)
       user2 = @db.get_user(request.invitee_id)
 
-      # OpenTok
+      # OpenTok Session
       api_key = '44722822'
       api_secret = 'cd008912cf564662b8dcd3016f27968506f1300b'
       opentok_sdk = OpenTok::OpenTokSDK.new api_key, api_secret
       session = opentok_sdk.create_session
       opentok_id = session.session_id
-      # End of OpenTok
+      # End of OpenTok Session
 
-      video_session = @db.create_video_session(user1.id, user2.id, opentok_id)
+      # OpenTok Token For User
+      token = opentok_sdk.generate_token :session_id => opentok_id
+      # End of OpenTok Token
+
+      video_session = @db.create_video_session(user1.id, user2.id, opentok_id, token)
       success :id => video_session.id, :inviter_id => video_session.user1_id, :invitee_id => video_session.user2_id, :opentok_id => opentok_id
 
 
