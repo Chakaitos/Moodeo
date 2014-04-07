@@ -192,5 +192,49 @@ module Moodeo
      @sqlite.execute("DELETE FROM friend_requests")
      @sqlite.execute("DELETE FROM videos")
     end
+
+    def video_request(inviter_id,invitee_id,status)
+      video_request = InviteRequest.new(inviter_id,invitee_id,status)
+      # binding.pry
+      @sqlite.execute("INSERT INTO video_requests(source_id, target_id, status) VALUES (?,?,?);", inviter_id, invitee_id, status)
+
+
+      video_request.id = @sqlite.execute("SELECT last_insert_rowid()")[0][0]
+
+      video_request
+
+    end
+
+    def get_video_request(invite_id)
+      rows = @sqlite.execute("SELECT * FROM video_requests WHERE id = ?;", invite_id)
+      # Since we are selecting by id, and ids are UNIQUE, we can assume only ONE row is returned
+      data = rows.first
+      if data == nil
+        return nil
+      else
+        # Create a convenient User object based on the data given to us by SQLite
+        video_request = InviteRequest.new(data[1], data[2], data[3])
+        video_request.id = data[0]
+        video_request
+      end
+
+    end
+
+    def create_video_session (user1_id, user2_id) #CREATE VideoSession class
+      @sqlite.execute("INSERT INTO video_sessions (user_source_id, user_target_id) VALUES (?,?);", user1_id, user2_id)
+      data = @sqlite.execute("SELECT last_insert_rowid()")[0][0]
+      # Since we are selecting by id, and ids are UNIQUE, we can assume only ONE row is returned
+      if data == nil
+        return nil
+      else
+        # Create a convenient User object based on the data given to us by SQLite
+        # user = User.new(data[1], data[2], data[3])
+        # user.id = data[0]
+        # user
+        # OLD METHOD
+        # @users[uid]
+        data[0]
+      end
+    end
 	end
 end
