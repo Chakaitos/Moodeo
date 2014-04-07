@@ -7,5 +7,6 @@ describe 'FriendRequest' do
     invitation = FriendRequest.new(user1.id, user2.id)
     expect(invitation.inviter_id).to eq(user1.id)
     expect(invitation.invitee_id).to eq(user2.id)
+    expect(invitation.status).to eq "pending"
   end
 end
