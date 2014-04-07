@@ -44,14 +44,31 @@ module Moodeo
       if data == nil
         return nil
       else
-
-      # Create a convenient User object based on the data given to us by SQLite
-      user = User.new(data[1], data[2], data[3])
-      user.id = data[0]
-      user
-      # OLD METHOD
-      # @users[uid]
+        # Create a convenient User object based on the data given to us by SQLite
+        user = User.new(data[1], data[2], data[3])
+        user.id = data[0]
+        user
+        # OLD METHOD
+        # @users[uid]
+      end
     end
+
+    def get_session(sid)
+      # Pro Tip: Always try SQL statements in the terminal first
+      rows = @sqlite.execute("SELECT * FROM sessions WHERE id = ?", sid)
+
+      # Since we are selecting by id, and ids are UNIQUE, we can assume only ONE row is returned
+      data = rows.first
+      if data == nil
+        return nil
+      else
+        # Create a convenient User object based on the data given to us by SQLite
+        user = User.new(data[1], data[2], data[3])
+        user.id = data[0]
+        user
+        # OLD METHOD
+        # @users[uid]
+      end
     end
 
     def get_user_by_username(username)
@@ -62,7 +79,6 @@ module Moodeo
       if data == nil
         return nil
       else
-
         # Create a convenient User object based on the data given to us by SQLite
         user = User.new(data[1], data[2], data[3])
         user.id = data[0]
@@ -77,17 +93,12 @@ module Moodeo
 
       # Since we are selecting by id, and ids are UNIQUE, we can assume only ONE row is returned
       data = rows.first
-      if data == nil
-        return nil
-      else
-
         # Create a convenient User object based on the data given to us by SQLite
         session = Session.new(data[1])
         session.id = data[0]
-        session
+        session.user_id
         # OLD METHOD
         # @users[uid]
-      end
     end
 
     def show_all_users
@@ -112,6 +123,7 @@ module Moodeo
      @sqlite.execute("DELETE FROM users")
      @sqlite.execute("DELETE FROM friendships")
      @sqlite.execute("DELETE FROM sessions")
+     @sqlite.execute("DELETE FROM friend_requests")
     end
 
     def sign_in(username, password)
@@ -134,6 +146,20 @@ module Moodeo
       # session
     end
 
+    def friend_request(inviter_id, invitee_id)
+      friend_request = FriendRequest.new(inviter_id, invitee_id)
+      @sqlite.execute("INSERT INTO friend_requests (source_id, target_id) VALUES (?,?);", inviter_id, invitee_id)
+
+      # This is needed so other code can access the id of the user we just created
+      friend_request.id = @sqlite.execute("SELECT last_insert_rowid()")[0][0]
+
+      # Return a User object, just like in the old method
+      friend_request
+
+      # OLD METHOD
+      # session = Session.new(uid)
+      # session
+    end
 
 	end
 end

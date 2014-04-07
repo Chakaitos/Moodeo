@@ -24,7 +24,8 @@ describe Moodeo::SignIn do
    it "should sign the user in with good credentials" do
      result = subject.run(:username => @user.username, :password => @user.password)
      test = @db.get_user_by_session(result.id)
+     # binding.pry
      expect(result.success?).to eq true
-     expect(test.user_id).to eq(@user.id)
+     expect(test).to eq(@user.id)
    end
 end

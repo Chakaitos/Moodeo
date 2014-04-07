@@ -11,6 +11,8 @@ sqlite = SQLite3::Database.new(db_name)
 puts "Destroying #{db_name}..."
 sqlite.execute %q{DROP TABLE IF EXISTS users}
 sqlite.execute %q{DROP TABLE IF EXISTS friendships}
+sqlite.execute %q{DROP TABLE IF EXISTS sessions}
+sqlite.execute %q{DROP TABLE IF EXISTS friend_requests}
 
 puts "Creating tables..."
 sqlite.execute %q{
@@ -35,6 +37,16 @@ sqlite.execute %q{
     id                INTEGER       PRIMARY KEY,
     user_id           INT           NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id)
+  );
+}
+sqlite.execute %q{
+  CREATE TABLE friend_requests (
+    id                INTEGER       PRIMARY KEY,
+    source_id           INT           NOT NULL,
+    target_id           INT           NOT NULL,
+    status              TEXT          NOT NULL,
+    FOREIGN KEY(source_id) REFERENCES users(id),
+    FOREIGN KEY(target_id) REFERENCES users(id)
   );
 }
 
