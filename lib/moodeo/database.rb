@@ -28,11 +28,6 @@ module Moodeo
 
       # Return a User object, just like in the old method
       user
-
-      # OLD METHOD
-			# user = User.new(name, password)
-			# @users[user.id.to_i] = user
-			# user
 		end
 
     def get_user(uid)
@@ -48,8 +43,6 @@ module Moodeo
         user = User.new(data[1], data[2], data[3])
         user.id = data[0]
         user
-        # OLD METHOD
-        # @users[uid]
       end
     end
 
@@ -65,8 +58,6 @@ module Moodeo
         user = User.new(data[1], data[2], data[3])
         user.id = data[0]
         user
-        # OLD METHOD
-        # @users[uid]
       end
     end
 
@@ -75,12 +66,10 @@ module Moodeo
 
       # Since we are selecting by id, and ids are UNIQUE, we can assume only ONE row is returned
       data = rows.first
-        # Create a convenient User object based on the data given to us by SQLite
-        session = Session.new(data[1])
-        session.id = data[0]
-        session.user_id
-        # OLD METHOD
-        # @users[uid]
+      # Create a convenient User object based on the data given to us by SQLite
+      session = Session.new(data[1])
+      session.id = data[0]
+      session.user_id
     end
 
     def show_all_users
@@ -109,12 +98,8 @@ module Moodeo
       # This is needed so other code can access the id of the user we just created
       session.id = @sqlite.execute("SELECT last_insert_rowid()")[0][0]
 
-      # Return a User object, just like in the old method
+      # Return a Session object, just like in the old method
       session
-
-      # OLD METHOD
-      # session = Session.new(uid)
-      # session
     end
 
     def get_session(sid)
@@ -126,12 +111,10 @@ module Moodeo
       if data == nil
         return nil
       else
-        # Create a convenient User object based on the data given to us by SQLite
+        # Create a convenient Session object based on the data given to us by SQLite
         session = Session.new(data[1])
         session.id = data[0]
         session
-        # OLD METHOD
-        # @users[uid]
       end
     end
 
@@ -185,24 +168,14 @@ module Moodeo
       video
     end
 
-    def clear_all_records
-     @sqlite.execute("DELETE FROM users")
-     @sqlite.execute("DELETE FROM friendships")
-     @sqlite.execute("DELETE FROM sessions")
-     @sqlite.execute("DELETE FROM friend_requests")
-     @sqlite.execute("DELETE FROM videos")
-    end
-
     def video_request(inviter_id,invitee_id,status)
       video_request = InviteRequest.new(inviter_id,invitee_id,status)
       # binding.pry
       @sqlite.execute("INSERT INTO video_requests(source_id, target_id, status) VALUES (?,?,?);", inviter_id, invitee_id, status)
 
-
       video_request.id = @sqlite.execute("SELECT last_insert_rowid()")[0][0]
 
       video_request
-
     end
 
     def get_video_request(invite_id)
@@ -217,24 +190,25 @@ module Moodeo
         video_request.id = data[0]
         video_request
       end
-
     end
 
-    def create_video_session (user1_id, user2_id) #CREATE VideoSession class
+    def create_video_session (user1_id, user2_id) 
+      video_session = VideoSession.new(user1_id, user2_id)
+      # binding.pry
       @sqlite.execute("INSERT INTO video_sessions (user_source_id, user_target_id) VALUES (?,?);", user1_id, user2_id)
-      data = @sqlite.execute("SELECT last_insert_rowid()")[0][0]
-      # Since we are selecting by id, and ids are UNIQUE, we can assume only ONE row is returned
-      if data == nil
-        return nil
-      else
-        # Create a convenient User object based on the data given to us by SQLite
-        # user = User.new(data[1], data[2], data[3])
-        # user.id = data[0]
-        # user
-        # OLD METHOD
-        # @users[uid]
-        data[0]
-      end
+      video_session.id = @sqlite.execute("SELECT last_insert_rowid()")[0][0]
+
+      video_session
+    end
+
+    def clear_all_records
+     @sqlite.execute("DELETE FROM users")
+     @sqlite.execute("DELETE FROM friendships")
+     @sqlite.execute("DELETE FROM sessions")
+     @sqlite.execute("DELETE FROM friend_requests")
+     @sqlite.execute("DELETE FROM videos")
+     @sqlite.execute("DELETE FROM video_sessions")
+     @sqlite.execute("DELETE FROM video_requests")
     end
 	end
 end

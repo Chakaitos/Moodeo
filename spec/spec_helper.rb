@@ -1,7 +1,7 @@
 require './lib/moodeo.rb'
 require 'pry-debugger'
 
-Moodeo.db_name = 'moodeo-test.db'
+Moodeo.db_name = 'moodeo.db'
 
 RSpec.configure do |config|
 config.before(:each) do

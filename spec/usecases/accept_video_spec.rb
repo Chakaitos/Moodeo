@@ -17,9 +17,10 @@ describe Moodeo::AcceptVideo do
     expect(result.error?).to eq(true)
   end
 
- it "will return an error if the user is not logged in" do
+  it "will return an error if the user is not logged in" do
     # invite = @db.friend_request(@user2.id, @user1.id, "pending")
     result = subject.run({ :session_id => 2354, :invitee_id => @invite.id })
     expect(result.error).to eq(:session_not_found)
     expect(result.error?).to eq(true)
   end
+end
