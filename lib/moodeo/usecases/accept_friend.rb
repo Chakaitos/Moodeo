@@ -17,7 +17,7 @@ module Moodeo
       user2 = @db.get_user(invite.invitee_id)
       friendship = @db.create_friendship(user1.id, user2.id)
 
-      success :friendship => friendship
+      success :id => friendship.id, :inviter_id => friendship.inviter_id, :invitee_id => friendship.invitee_id
     end
   end
 end
