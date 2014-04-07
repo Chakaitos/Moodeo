@@ -18,7 +18,7 @@ module Moodeo
 			# @users = {}
 		end
 
-		# Create methods - CRUD
+    #User Methods
 		def create_user(name, username, password)
 			user = User.new(name, username, password)
       @sqlite.execute("INSERT INTO users (name, username, password) VALUES (?,?,?);", name, username, password)
@@ -63,9 +63,9 @@ module Moodeo
         return nil
       else
         # Create a convenient User object based on the data given to us by SQLite
-        user = User.new(data[1], data[2], data[3])
-        user.id = data[0]
-        user
+        session = Session.new(data[1])
+        session.id = data[0]
+        session
         # OLD METHOD
         # @users[uid]
       end
@@ -146,9 +146,9 @@ module Moodeo
       # session
     end
 
-    def friend_request(inviter_id, invitee_id)
-      friend_request = FriendRequest.new(inviter_id, invitee_id)
-      @sqlite.execute("INSERT INTO friend_requests (source_id, target_id) VALUES (?,?);", inviter_id, invitee_id)
+    def friend_request(inviter_id, invitee_id, status)
+      friend_request = FriendRequest.new(inviter_id, invitee_id, status)
+      @sqlite.execute("INSERT INTO friend_requests (source_id, target_id, status) VALUES (?,?,?);", inviter_id, invitee_id, status)
 
       # This is needed so other code can access the id of the user we just created
       friend_request.id = @sqlite.execute("SELECT last_insert_rowid()")[0][0]
@@ -159,6 +159,39 @@ module Moodeo
       # OLD METHOD
       # session = Session.new(uid)
       # session
+    end
+
+    def create_friendship(user_id1, user_id2)
+      @sqlite.execute("INSERT INTO friendships (user_source_id, user_target_id) VALUES (?,?);", user_id1, user_id2)
+      data = @sqlite.execute("SELECT last_insert_rowid()")[0][0]
+      # Since we are selecting by id, and ids are UNIQUE, we can assume only ONE row is returned
+      if data == nil
+        return nil
+      else
+        # Create a convenient User object based on the data given to us by SQLite
+        # user = User.new(data[1], data[2], data[3])
+        # user.id = data[0]
+        # user
+        # OLD METHOD
+        # @users[uid]
+        data[0]
+      end
+    end
+
+    def get_friend_request(invite_id)
+      rows = @sqlite.execute("SELECT * FROM friend_requests WHERE id = ?;", invite_id)
+      # Since we are selecting by id, and ids are UNIQUE, we can assume only ONE row is returned
+      data = rows.first
+      if data == nil
+        return nil
+      else
+        # Create a convenient User object based on the data given to us by SQLite
+        friend_request = FriendRequest.new(data[1], data[2], data[3])
+        friend_request.id = data[0]
+        friend_request
+        # OLD METHOD
+        # @users[uid]
+      end
     end
 
 	end

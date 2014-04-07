@@ -9,6 +9,7 @@ module Moodeo
       # binding.pry
       inviter = @db.get_user(inviter_id)
       invitee = @db.get_user(invitee_id)
+      status = "pending"
       # binding.pry
       # inviter_user = @db.get_user(inviter)
 
@@ -17,7 +18,7 @@ module Moodeo
       return failure(:invitee_not_found) if invitee == nil
 
       # binding.pry
-      invite = @db.friend_request(inviter.id, invitee.id)
+      invite = @db.friend_request(inviter.id, invitee.id, status)
 
       success(:id => invite.id, :invitee_id => invitee.id, :inviter_id => inviter.id)
     end

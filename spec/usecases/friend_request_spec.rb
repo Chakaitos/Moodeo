@@ -15,7 +15,7 @@ describe Moodeo::RequestFriend do
 
   it "works" do
     session = @db.create_session(@user1.id)
-    result = subject.run({ :session_id => session.id, :invitee_id => @user2.id})
+    result = subject.run({ :session_id => session.id, :invitee_id => @user2.id, :status => "pending"})
     expect(result.success?).to eq(true)
   end
 end

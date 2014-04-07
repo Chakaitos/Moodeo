@@ -27,7 +27,7 @@ sqlite.execute %q{
   CREATE TABLE friendships (
     id          			INTEGER 			PRIMARY KEY,
     user_source_id    INT           NOT NULL,
-    user_target_id		INT		         NOT NULL,
+    user_target_id		INT		        NOT NULL,
     FOREIGN KEY(user_source_id) REFERENCES users(id),
     FOREIGN KEY(user_target_id) REFERENCES users(id)
   );
@@ -44,7 +44,7 @@ sqlite.execute %q{
     id                INTEGER       PRIMARY KEY,
     source_id           INT           NOT NULL,
     target_id           INT           NOT NULL,
-    status              TEXT,
+    status              TEXT          NOT NULL,
     FOREIGN KEY(source_id) REFERENCES users(id),
     FOREIGN KEY(target_id) REFERENCES users(id)
   );
