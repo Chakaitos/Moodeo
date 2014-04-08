@@ -208,16 +208,16 @@ module Moodeo
     end
 
     def get_friendship(fid)
-      rows = @sqlite.execute("SELECT * FROM friendships WHERE id = ?;", fid)
+      rows = @sqlite.execute("SELECT * FROM friendships WHERE user_source_id = ?;", fid)
       # Since we are selecting by id, and ids are UNIQUE, we can assume only ONE row is returned
-      data = rows.first
-      if data == nil
+      if rows == nil
         return nil
       else
-        # Create a convenient Friendship object based on the data given to us by SQLite
-        friendship = Friendship.new(data[1], data[2])
-        friendship.id = data[0]
+      rows.map do |row|
+        friendship = Friendship.new(row[1], row[2])
+        friendship.id = row[0]
         friendship
+      end
       end
     end
 
@@ -308,6 +308,18 @@ module Moodeo
 
     def show_all_video_requests
       result = @sqlite.execute("SELECT * FROM video_requests")
+
+      # Here we convert our array of **data arrays** into an array of convenient VideoRequests objects.
+      # Due to Ruby's implicit returns, the new array gets returned.
+      result.map do |row|
+        video_request = InviteRequest.new(row[1], row[2], row[3])
+        video_request.id = row[0]
+        video_request
+      end
+    end
+
+    def show_all_video_requests_by_user(uid)
+      result = @sqlite.execute("SELECT * FROM video_requests where target_id= ?", uid)
 
       # Here we convert our array of **data arrays** into an array of convenient VideoRequests objects.
       # Due to Ruby's implicit returns, the new array gets returned.

@@ -2,6 +2,7 @@ require_relative './lib/moodeo.rb'
 require 'sinatra'
 require 'rubygems'
 require 'pry-debugger'
+require 'opentok'
 
 Moodeo.db_name = 'moodeo.db'
 
@@ -63,6 +64,19 @@ get '/main' do
 
   @invites = Moodeo.db.get_all_friend_requests_by_user_id(usernameforsearch.id)
   @invites_count = @invites.count
+
+  @video_invites = Moodeo.db.show_all_video_requests_by_user(usernameforsearch.id)
+  @video_invites_count = @video_invites.count
+
+
+  puts "heres the Id!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+  puts usernameforsearch.id
+  puts "These are freinds!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+  @friends = Moodeo.db.get_friendship(usernameforsearch.id)
+
+  puts @friends
+
+
   erb :main
 end
 
@@ -92,6 +106,7 @@ end
 post '/search' do
   search = params[:search_for_user]
   usernameforsearch = Moodeo.db.get_user_by_username(search)
+  @friends = Moodeo.db.get_friendship(usernameforsearch.id)
   if usernameforsearch != nil
     @userfound = usernameforsearch.username
     erb :search
@@ -103,6 +118,7 @@ end
 
 get '/profile/:username' do
   usernameforsearch = Moodeo.db.get_user_by_username(params[:username])
+  @friends = Moodeo.db.get_friendship(usernameforsearch.id)
   if usernameforsearch != nil
     @userfound_username = usernameforsearch.username
     @userfound_name = usernameforsearch.name
@@ -115,8 +131,10 @@ end
 
 
 get '/addfriend/:user2' do
+  @username = session[:username]
   usernameforsearch = Moodeo.db.get_user_by_username(params[:user2])
-  ourusername = Moodeo.db.get_user_by_username(@@username)
+  ourusername = Moodeo.db.get_user_by_username(@username)
+  @friends = Moodeo.db.get_friendship(usernameforsearch.id)
   if usernameforsearch != nil
     request = Moodeo.db.friend_request(ourusername.id, usernameforsearch.id, "pending")
     if request != nil
@@ -128,6 +146,46 @@ get '/addfriend/:user2' do
   end
 end
 
+get '/invitevideo/:user2' do
+  @username = session[:username]
+  usernameforsearch = Moodeo.db.get_user_by_username(params[:user2])
+  ourusername = Moodeo.db.get_user_by_username(@username)
+  @friends = Moodeo.db.get_friendship(usernameforsearch.id)
+  if usernameforsearch != nil
+    request = Moodeo.db.video_request(ourusername.id, usernameforsearch.id, "pending")
+    if request != nil
+      erb :main
+    end
+  else
+    erb :main
+  end
+end
+
+
+get '/acceptvideoinvite/:user2' do
+  @username = session[:username]
+  usernameforsearch = Moodeo.db.get_user_by_username(session[:username])
+  ouruser_id = usernameforsearch.id
+  buddy = params[:usernametoadd]
+  buddytosearch = Moodeo.db.get_user_by_username(buddy)
+  @friends = Moodeo.db.get_friendship(usernameforsearch.id)
+
+  # OpenTok Session
+  api_key = '44722822'
+  api_secret = 'cd008912cf564662b8dcd3016f27968506f1300b'
+  opentok_sdk = OpenTok::OpenTokSDK.new api_key, api_secret
+  session = opentok_sdk.create_session
+  @opentok_id = session.session_id
+  # End of OpenTok Session
+
+  # OpenTok Token For User
+  @token = opentok_sdk.generate_token :session_id => @opentok_id
+  # End of OpenTok Token
+
+  create_video_session = Moodeo.db.create_video_session(ouruser_id, buddytosearch.id, @opentok_id, @token)
+  erb :connectedvideo
+end
+
 
 get '/listinvites' do
   @username = session[:username]
@@ -137,9 +195,39 @@ get '/listinvites' do
   @actual_invites = @invites.map do |invite|
     @test = invite.inviter_id
     @inviter = Moodeo.db.get_user(@test)
-    @inviter_name = @inviter.name
+    @inviter_name = @inviter.username
   end
   erb :listinvites
+end
+
+
+get '/listvideoinvites' do
+  @username = session[:username]
+  usernameforsearch = Moodeo.db.get_user_by_username(session[:username])
+  @videoinvites = Moodeo.db.show_all_video_requests_by_user(usernameforsearch.id)
+  @invites_count = @videoinvites.count
+  @actual_video_invites = @videoinvites.map do |invite|
+    @test = invite.inviter_id
+    @inviter = Moodeo.db.get_user(@test)
+    @inviter_name = @inviter.username
+  end
+  erb :listvideoinvites
+end
+
+get '/acceptfriend/:usernametoadd' do
+  @username = session[:username]
+  usernameforsearch = Moodeo.db.get_user_by_username(session[:username])
+  ouruser_id = usernameforsearch.id
+  buddy = params[:usernametoadd]
+  buddytosearch = Moodeo.db.get_user_by_username(buddy)
+  create_friend = Moodeo.db.create_friendship(ouruser_id, buddytosearch.id)
+  @friends = Moodeo.db.get_friendship(usernameforsearch.id)
+  erb :main
+end
+
+get "/signout" do
+  session.clear
+  erb :home
 end
 
 

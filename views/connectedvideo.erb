@@ -99,5 +99,23 @@
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="js/application.js"></script>
 
+    <script src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js" ></script>
+    <script type="text/javascript">
+     var apiKey    = "44722822";
+     var sessionId = "@opentok_id";
+     var token     = "@token";
+
+     var session = OT.initSession(apiKey, sessionId);
+
+     session.on("streamCreated", function(event) {
+       session.subscribe(event.stream);
+     });
+
+     session.connect(token, function(error) {
+       var publisher = OT.initPublisher();
+       session.publish(publisher);
+     });
+    </script>
+
   </body>
 </html>

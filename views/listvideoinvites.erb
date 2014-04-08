@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Moodeo</title>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/media.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/media.css">
   </head>
   <body>
     <div id="header">
@@ -13,9 +13,6 @@
         <div id="menuLoggedIn">
           <li>
             <p>Video Invites: <a href="/listvideoinvites"><%= @video_invites_count %></a></p>
-          </li>
-          <li>
-            <p>Invites: <a href="/listinvites"><%= @invites_count %></a></p>
           </li>
           <li>
             <p>Welcome, <%= @username %></p>
@@ -34,7 +31,12 @@
         </div>
         <div class ="mainContent">
           <div class="main-middle-shit">
-
+            <h1>Invites</h1>
+            <ul style="padding-left:200px;">
+              <% @actual_video_invites.each do |invite| %>
+                <li><%= invite %></li><a href="/acceptvideoinvite/<%=invite%>" >Accept Video Invite</a>
+              <% end %>
+            </ul>
           </div>
         <div class="imageSideFriends">
           <div class="navMenu expander">
@@ -42,14 +44,7 @@
               <input type="text" name="search_for_user"/>
             </form>
           </div>
-            <ul style="padding-left:70px; position:absolute; padding-top:70px; z-index:10000;">
-              <% @friends.each do |friend|
-                id = friend.invitee_id
-                user = Moodeo.db.get_user(id) %>
-                <li><%= user.username%></li><a href="/invitevideo/<%= user.username%>">Invite</a>
-              <% end %>
-            </ul>
-          <img class"friends-side-bar" src="../img/friendsimage.png">
+          <img class"friends-side-bar" src="img/friendsimage.png">
         </div>
       </div>
     </div>

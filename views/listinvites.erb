@@ -17,7 +17,7 @@
           <li>
             <p>Welcome, <%= @username %></p>
           </li>
-            <a href="/home"><button class="btn menu-btn" type="button" data-popup="getstarted">Sign Out</button></a>
+            <a href="/signout"><button class="btn menu-btn" type="button" data-popup="getstarted">Sign Out</button></a>
         </div>
       </div>
     </div>
@@ -34,7 +34,7 @@
             <h1>Invites</h1>
             <ul style="padding-left:200px;">
               <% @actual_invites.each do |invite| %>
-                <li><%= invite %></li><button href="/acceptfriend/<%= %>">Accept Friend</a>
+                <li><%= invite %></li><a href="/acceptfriend/<%=invite%>" >Accept Friend</a>
               <% end %>
             </ul>
           </div>
