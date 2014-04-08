@@ -154,7 +154,31 @@ get '/invitevideo/:user2' do
   if usernameforsearch != nil
     request = Moodeo.db.video_request(ourusername.id, usernameforsearch.id, "pending")
     if request != nil
-      erb :main
+
+
+      # OpenTok Session
+      api_key = '44722822'
+      api_secret = 'cd008912cf564662b8dcd3016f27968506f1300b'
+      opentok_sdk = OpenTok::OpenTokSDK.new api_key, api_secret
+      session = opentok_sdk.create_session
+      @opentok_id = session.session_id
+
+
+      # OpenTok Token For User
+      @token = opentok_sdk.generate_token :session_id => @opentok_id
+      # End of OpenTok Token
+
+      puts "HERES THE OPENTOK BEING CREATED"
+      puts @opentok_id
+      puts "Then THE TOKEN"
+      puts @token
+      # End of OpenTok Session
+
+
+      create_video_session = Moodeo.db.create_video_session(ourusername.id, usernameforsearch.id, @opentok_id, @token)
+      puts "HERES THE CREATED VIDEO SESSION *********************************"
+      puts create_video_session
+      erb :connectedvideo
     end
   else
     erb :main
@@ -164,25 +188,24 @@ end
 
 get '/acceptvideoinvite/:user2' do
   @username = session[:username]
-  usernameforsearch = Moodeo.db.get_user_by_username(session[:username])
+  usernameforsearch = Moodeo.db.get_user_by_username(@username)
   ouruser_id = usernameforsearch.id
-  buddy = params[:usernametoadd]
+  buddy = params[:user2]
   buddytosearch = Moodeo.db.get_user_by_username(buddy)
   @friends = Moodeo.db.get_friendship(usernameforsearch.id)
 
-  # OpenTok Session
-  api_key = '44722822'
-  api_secret = 'cd008912cf564662b8dcd3016f27968506f1300b'
-  opentok_sdk = OpenTok::OpenTokSDK.new api_key, api_secret
-  session = opentok_sdk.create_session
-  @opentok_id = session.session_id
-  # End of OpenTok Session
 
-  # OpenTok Token For User
-  @token = opentok_sdk.generate_token :session_id => @opentok_id
-  # End of OpenTok Token
+  get_video_session1 = Moodeo.db.get_video_session_by_users(buddytosearch.id, usernameforsearch.id)
+  puts '*********************************************************************************'
+  puts get_video_session1
+  puts '*********************************************************************************'
+  @opentok_id = get_video_session1.token
+  @token = get_video_session1.opentok_id
+  puts "Heres opentok!"
+  puts @opentok_id
+  puts "Heres the token"
+  puts @token
 
-  create_video_session = Moodeo.db.create_video_session(ouruser_id, buddytosearch.id, @opentok_id, @token)
   erb :connectedvideo
 end
 

@@ -102,8 +102,8 @@
     <script src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js" ></script>
     <script type="text/javascript">
      var apiKey    = "44722822";
-     var sessionId = "@opentok_id";
-     var token     = "@token";
+     var sessionId = "<%=@opentok_id %>";
+     var token     = "<%=@token %>";
 
      var session = OT.initSession(apiKey, sessionId);
 

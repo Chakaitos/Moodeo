@@ -359,6 +359,21 @@ module Moodeo
       end
     end
 
+    def get_video_session_by_users(user1_id, user2_id)
+      rows = @sqlite.execute("SELECT * FROM video_sessions WHERE user_source_id = ? AND user_target_id = ?;", user1_id, user2_id)
+      # Since we are selecting by id, and ids are UNIQUE, we can assume only ONE row is returned
+      data = rows.first
+      if data == nil
+        # binding.pry
+        return nil
+      else
+        # Create a convenient VideoSession object based on the data given to us by SQLite
+        video_session = VideoSession.new(data[1], data[2], data[3], data[4])
+        video_session.id = data[0]
+        video_session
+      end
+    end
+
     def show_all_video_sessions
       result = @sqlite.execute("SELECT * FROM video_sessions")
 
