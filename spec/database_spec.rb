@@ -200,7 +200,7 @@ describe 'Database' do
       # This should save to the db
       # Here we create a **new** db instance. It should have access
       # to the users we created with the original db instance.
-      sql_db = Moodeo::DB.new('moodeo.db')
+      sql_db = Moodeo::DB.new('moodeo-test.db')
 
       # show all users
       ids = sql_db.show_all_users.map(&:id)
@@ -235,7 +235,7 @@ describe 'Database' do
     end
 
     it "has persistence for friend requests" do
-      sql_db = Moodeo::DB.new('moodeo.db')
+      sql_db = Moodeo::DB.new('moodeo-test.db')
       friend_request1 = sql_db.friend_request(@user1.id, @user2.id, 'pending')
       friend_request2 = sql_db.friend_request(@user3.id, @user2.id, 'pending')
 
@@ -262,7 +262,7 @@ describe 'Database' do
     end
 
     it "has persistence for sessions" do
-      sql_db = Moodeo::DB.new('moodeo.db')
+      sql_db = Moodeo::DB.new('moodeo-test.db')
       session1 = sql_db.create_session(@user1.id)
       session2 = sql_db.create_session(@user2.id)
 
@@ -281,7 +281,7 @@ describe 'Database' do
     end
 
     it "has persistence for friendships" do
-      sql_db = Moodeo::DB.new('moodeo.db')
+      sql_db = Moodeo::DB.new('moodeo-test.db')
       friendship1 = sql_db.create_friendship(@user1.id, @user2.id)
       friendship2 = sql_db.create_friendship(@user3.id, @user2.id)
 
@@ -304,7 +304,7 @@ describe 'Database' do
     end
 
     it "has persistence for videos" do
-      sql_db = Moodeo::DB.new('moodeo.db')
+      sql_db = Moodeo::DB.new('moodeo-test.db')
       video1 = sql_db.create_video("Drew eating BBQ", "Funny", "www.youtube.com/drew-eating-bbq")
       video2 = sql_db.create_video("Surfing tournament", "Sports", "www.youtube.com/surfing-tournament")
 
@@ -331,7 +331,7 @@ describe 'Database' do
     end
 
     it "has persistence for video requests" do
-      sql_db = Moodeo::DB.new('moodeo.db')
+      sql_db = Moodeo::DB.new('moodeo-test.db')
       video_request1 = sql_db.video_request(@user1.id, @user2.id, 'pending')
       video_request2 = sql_db.video_request(@user3.id, @user2.id, 'pending')
 
@@ -358,7 +358,7 @@ describe 'Database' do
     end
 
     it "has persistence for video sessions" do
-      sql_db = Moodeo::DB.new('moodeo.db')
+      sql_db = Moodeo::DB.new('moodeo-test.db')
       # otok_id = "1zKEKDJHF847392JDHF33"
       # token = "3BEKD3487622488FSJDHF33"
       video_session1 = sql_db.create_video_session(@user1.id, @user2.id, "1zKEKDJHF847392JDHF33", "3BEKD3487622488FSJDHF33")
