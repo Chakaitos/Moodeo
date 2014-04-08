@@ -32,7 +32,7 @@ module Moodeo
       # End of OpenTok Token
 
       video_session = @db.create_video_session(user1.id, user2.id, opentok_id, token)
-      success :id => video_session.id, :inviter_id => video_session.user1_id, :invitee_id => video_session.user2_id, :opentok_id => opentok_id
+      success :id => video_session.id, :inviter_id => video_session.user1_id, :invitee_id => video_session.user2_id, :opentok_id => opentok_id, :token => token
 
 
     end
