@@ -205,7 +205,6 @@ get '/acceptvideoinvite/:user2' do
   puts @opentok_id
   puts "Heres the token"
   puts @token
-
   erb :connectedvideo
 end
 

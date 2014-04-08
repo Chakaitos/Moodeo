@@ -5,6 +5,18 @@
     <title>Moodeo</title>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/media.css">
+    <style>
+      .OT_mirrored, .OT_root, .OT_publisher{
+        left: 1000px;
+        bottom:1000px;
+        z-index: 999;
+      }
+      .main-middle-shit {
+        padding-left: 100px;
+        padding-top: 70px;
+      }
+
+    </style>
   </head>
   <body>
     <div id="header">
@@ -34,7 +46,7 @@
         </div>
         <div class ="mainContent">
           <div class="main-middle-shit">
-
+            <iframe width="420" height="315" src="//www.youtube.com/embed/zf-qoF7H844" frameborder="0" allowfullscreen></iframe>
           </div>
         <div class="imageSideFriends">
           <div class="navMenu expander">
@@ -96,26 +108,27 @@
       <div class="submitted hidden">Thank you for signing up. Some cool shit is about to happen!</div>
     </div>
 
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="js/application.js"></script>
 
-    <script src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js" ></script>
-    <script type="text/javascript">
-     var apiKey    = "44722822";
-     var sessionId = "<%=@opentok_id %>";
-     var token     = "<%=@token %>";
+          <script src="http://code.jquery.com/jquery.js"></script>
+          <script src="js/application.js"></script>
 
-     var session = OT.initSession(apiKey, sessionId);
+          <script src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js" ></script>
+          <script type="text/javascript">
+           var apiKey    = "44722822";
+           var sessionId = "<%=@opentok_id %>";
+           var token     = "<%=@token %>";
 
-     session.on("streamCreated", function(event) {
-       session.subscribe(event.stream);
-     });
+           var session = OT.initSession(apiKey, sessionId);
 
-     session.connect(token, function(error) {
-       var publisher = OT.initPublisher();
-       session.publish(publisher);
-     });
-    </script>
+           session.on("streamCreated", function(event) {
+             session.subscribe(event.stream);
+           });
+
+           session.connect(token, function(error) {
+             var publisher = OT.initPublisher();
+             session.publish(publisher);
+           });
+          </script>
 
   </body>
 </html>
