@@ -1,0 +1,264 @@
+/* Media Queries
+================================ */
+@media (min-width: 1px) and (max-width: 639px) {
+  .grid-4 {
+    width: 100%; }
+
+  #getStarted {
+    width: 100%;
+    margin-top: -172px;
+    margin-left: -200px; }
+    #getStarted input[type=submit] {
+      width: 100%; }
+    #getStarted input[type=email] {
+      width: 100%;
+      margin-bottom: 10px; }
+    #getStarted p {
+      padding: 0 0; } }
+@media (min-width: 640px) and (max-width: 1000px) {
+  .grid-4 {
+    width: 100%; }
+
+  #header {
+    padding: 0 40px; }
+
+  .logo {
+    top: 25px;
+    width: 88px;
+    height: 110px; }
+
+  #menu {
+    top: 75px; }
+    #menu li {
+      margin: 0 0 0 60px; }
+      #menu li a {
+        font-size: 18px; }
+    #menu .menu-btn {
+      font-size: 18px;
+      margin-top: -45px;
+      margin-left: 40px; }
+
+  .s1 {
+    background: #24282f;
+    width: 100%;
+    height: 600px; }
+    .s1 .title {
+      top: 230px; }
+    .s1 h1 {
+      font-size: 60px;
+      line-height: 75px; }
+    .s1 .social-main {
+      width: 560px;
+      top: 170px; }
+
+  .s2 h1 {
+    font-size: 45px;
+    line-height: 75px; }
+  .s2 p {
+    font-size: 20px; }
+
+  .s3 h2 {
+    font-size: 34px; }
+  .s3 p {
+    max-width: 500px;
+    margin: 0 auto;
+    font-size: 20px; }
+
+  .s4 h1 {
+    font-size: 45px; }
+  .s4 .s4-title {
+    width: 500px; }
+  .s4 p {
+    display: block;
+    font-size: 20px; }
+
+  #footer {
+    height: 170px;
+    padding: 30px 40px; }
+    #footer .left {
+      float: left;
+      margin-top: 20px;
+      margin-bottom: 0;
+      text-align: left;
+      width: 58px; }
+    #footer .right {
+      float: right;
+      margin-top: 15px;
+      margin-bottom: 0;
+      text-align: right;
+      width: 272px; }
+    #footer .socialIcons {
+      width: 100%; }
+    #footer p {
+      display: block; } }
+@media (min-width: 1001px) and (max-width: 1199px) {
+  #header {
+    padding: 0 60px; }
+
+  .logo {
+    top: 25px;
+    width: 88px;
+    height: 110px; }
+
+  #menu {
+    top: 75px; }
+    #menu li {
+      margin: 0 0 0 60px; }
+      #menu li a {
+        font-size: 18px; }
+    #menu .menu-btn {
+      font-size: 18px;
+      margin-top: -45px;
+      margin-left: 40px; }
+
+  .s1 {
+    background: #24282f;
+    width: 100%;
+    height: 850px; }
+    .s1 .title {
+      top: 360px; }
+    .s1 .image {
+      background-attachment: fixed; }
+    .s1 h1 {
+      font-size: 85px;
+      line-height: 100px; }
+    .s1 .social-main {
+      width: 760px;
+      max-width: 1200px;
+      top: 200px; }
+    .s1 img {
+      width: 560px; }
+    .s1 .main-btn {
+      display: block; }
+    .s1 p {
+      font-size: 20px; }
+
+  .s2 h1 {
+    font-size: 68px;
+    line-height: 75px; }
+  .s2 p {
+    font-size: 20px; }
+
+  .s3 h2 {
+    font-size: 34px; }
+  .s3 p {
+    max-width: 500px;
+    margin: 0 auto;
+    font-size: 20px; }
+  .s3 .grid-4 {
+    float: left; }
+
+  .s4 h1 {
+    font-size: 45px; }
+  .s4 .s4-title {
+    width: 500px; }
+  .s4 p {
+    display: block;
+    font-size: 20px; }
+
+  #footer {
+    height: 170px;
+    padding: 30px 40px; }
+    #footer .left {
+      float: left;
+      margin-top: 20px;
+      margin-bottom: 0;
+      text-align: left;
+      width: 58px; }
+    #footer .right {
+      float: right;
+      margin-top: 15px;
+      margin-bottom: 0;
+      text-align: right;
+      width: 272px; }
+    #footer .socialIcons {
+      width: 100%; }
+    #footer p {
+      display: block; } }
+@media (min-width: 1200px) {
+  .grid-container {
+    max-width: 1170px; }
+
+  #header {
+    padding: 0 60px; }
+
+  .logo {
+    top: 25px;
+    width: 88px;
+    height: 110px; }
+
+  #menu {
+    top: 75px; }
+    #menu li {
+      margin: 0 0 0 60px; }
+      #menu li a {
+        font-size: 18px; }
+    #menu .menu-btn {
+      font-size: 18px;
+      margin-top: -45px;
+      margin-left: 40px; }
+
+  .s1 {
+    background: #24282f;
+    width: 100%;
+    height: 850px; }
+    .s1 .title {
+      top: 250px; }
+    .s1 .image {
+      background-attachment: fixed; }
+    .s1 h1 {
+      font-size: 85px;
+      line-height: 100px; }
+    .s1 .social-main {
+      width: 760px;
+      max-width: 1200px;
+      top: 200px; }
+    .s1 img {
+      width: 560px; }
+    .s1 .main-btn {
+      display: block; }
+    .s1 p {
+      font-size: 20px; }
+
+  .s2 h1 {
+    font-size: 68px;
+    line-height: 75px; }
+  .s2 p {
+    font-size: 20px; }
+
+  .s3 h2 {
+    font-size: 34px; }
+  .s3 p {
+    max-width: 500px;
+    margin: 0 auto;
+    font-size: 20px; }
+  .s3 .grid-4 {
+    float: left; }
+
+  .s4 h1 {
+    font-size: 45px; }
+  .s4 .s4-title {
+    width: 500px; }
+  .s4 p {
+    display: block;
+    font-size: 20px; }
+
+  #footer {
+    height: 170px;
+    padding: 30px 40px; }
+    #footer .left {
+      float: left;
+      margin-top: 20px;
+      margin-bottom: 0;
+      text-align: left;
+      width: 58px; }
+    #footer .right {
+      float: right;
+      margin-top: 15px;
+      margin-bottom: 0;
+      text-align: right;
+      width: 272px; }
+    #footer .socialIcons {
+      width: 100%; }
+    #footer p {
+      display: block; } }

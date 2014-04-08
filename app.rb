@@ -19,7 +19,7 @@ post '/signin' do
   result = Moodeo::SignIn.run(:username => params[:username], :password => params[:password])
   if result.success?
     @usernamedisplay = params[:username]
-    erb :home
+    erb :main
   else
     if result.error == :invalid_username
       @message = "Sorry, username is not found"
@@ -55,7 +55,32 @@ post '/signup' do
   end
 end
 
+post '/search' do
+  search = params[:search_for_user]
+  usernameforsearch = Moodeo.db.get_user_by_username(search)
+  if usernameforsearch != nil
+    @userfound = usernameforsearch.username
+    erb :search
+  else
+    @userfound = "Sorry, User was not found"
+    erb :search
+  end
+end
 
-# get '/home' do
-#   erb :home
+get '/profile/:username' do
+  usernameforsearch = Moodeo.db.get_user_by_username(params[:username])
+  if usernameforsearch != nil
+    @userfound_username = usernameforsearch.username
+    @userfound_name = usernameforsearch.name
+    erb :profile
+  else
+    @userfound = "Sorry, User was not found"
+    erb :profile
+  end
+end
+
+
+
+# get '/main' do
+#   erb :main
 # end

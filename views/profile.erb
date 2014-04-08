@@ -3,76 +3,40 @@
   <head>
     <meta charset="UTF-8">
     <title>Moodeo</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/media.css">
   </head>
   <body>
     <div id="header">
       <div class="grid-container">
        <!--  <img class="logo" src="img/logo@2x.png" alt width="60" height="75"> -->
-        <div id="menu">
-          <li>
-            <a href="#" class="menu-link">About</a>
-          </li>
-          <li>
-            <a href="/signin" class="menu-link">Sign In</a>
-          </li>
-            <a href="/signup"><button class="btn menu-btn" type="button" data-popup="getstarted">Sign Up</button></a>
-        </div>
-      </div>
-    </div>
-    <div class="section s1">
-      <div class="image"></div>
-      <div class="grid-container">
-        <div class="title">
-          <h1>
-            watch videos, <span>together.</span>
-          </h1>
-          <p>
-            <b>Moodeo is for friends.</b> watch, collaborate and discover <i>with your favorite people.</i>
-          </p>
+        <div id="menuLoggedIn">
+            <a href="/home"><button class="btn menu-btn" type="button" data-popup="getstarted">Sign Out</button></a>
         </div>
       </div>
     </div>
     <div class="section s2">
       <div class="grid-container">
         <div class="s2-title">
-          <h1>
+<!--           <h1>
             <span>your friends. your videos. one place.</span>
           </h1>
-          <p>all your videos from across the the web easily shared to a meaningful community.</p>
+          <p>all your videos from across the the web easily shared to a meaningful community.</p> -->
         </div>
-        <div class="imageFull">
-          <img class"intro-img" src="img/intro-image@2x.png" alt width="720" height="284">
-        </div>
-      </div>
-    </div>
-    <div class="section s3">
-      <div class="grid-container">
-        <div class="row">
-          <div class="grid-4">
-            <div class="boxImage">
-              <img src="img/growyourgroups@2x.jpg" class"s3-img" alt width="280" height="280">
-            </div>
-            <h2 class="titleBox">grow communities</h2>
-            <p>team up with friends that are in a similar mood to watch videos</p>
+        <div class ="mainContent">
+          <div class="main-middle-shit">
+            <h1>Account</h1><br/>
+            <h2>Username: <%= @userfound_username %></h2>
+            <h2>Name: <%= @userfound_name %></h2>
+
           </div>
-          <div class="grid-4">
-            <div class="boxImage">
-              <img src="img/growyourrecognition@2x.jpg" class"s3-img" alt width="280" height="280">
-            </div>
-            <h2 class="titleBox">get recognized</h2>
-            <p>collect and show off videos from anywhere on the web and get love from the crew</p>
+        <div class="imageSideFriends">
+          <div class="navMenu expander">
+            <form method="post" action="/search">
+              <input type="text" name="search_for_user"/>
+            </form>
           </div>
-          <div class="grid-4">
-            <div class="boxImage">
-              <img src="img/stayconnected@2x.jpg" class"s3-img" alt width="280" height="280">
-            </div>
-            <h2 class="titleBox">stay connected</h2>
-            <p>play, share, and discover videos with networks of people that rock your world</p>
-          </div>
-        </div>
-        <div class="clearfix">
+          <img class"friends-side-bar" src="../img/friendsimage.png">
         </div>
       </div>
     </div>
@@ -100,7 +64,7 @@
             <a href="#" class="social twitter"></a>
             <a href="#" class="social facebook"></a>
           </div>
-          <p>unvael © 2013 <span>/</span>
+          <p>moodeo © 2014 <span>/</span>
             policy <span>/</span>
             legal <span>/</span>
             <a href="mailto:hello@example.com">contact</a>
