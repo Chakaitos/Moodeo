@@ -12,10 +12,10 @@
        <!--  <img class="logo" src="img/logo@2x.png" alt width="60" height="75"> -->
         <div id="menuLoggedIn">
           <li>
-            <p>Invites: <a href="/listinvites"><%= @@invites_count %></a></p>
+            <p>Invites: <a href="/listinvites"><%= @invites_count %></a></p>
           </li>
           <li>
-            <p>Welcome, <%= @@username %></p>
+            <p>Welcome, <%= @username %></p>
           </li>
             <a href="/home"><button class="btn menu-btn" type="button" data-popup="getstarted">Sign Out</button></a>
         </div>
@@ -31,9 +31,10 @@
         </div>
         <div class ="mainContent">
           <div class="main-middle-shit">
-            <ul>
-              <% @invites.each do |invite| %>
-                <li><%= invite.something %></li>
+            <h1>Invites</h1>
+            <ul style="padding-left:200px;">
+              <% @actual_invites.each do |invite| %>
+                <li><%= invite %></li><button href="/acceptfriend/<%= %>">Accept Friend</a>
               <% end %>
             </ul>
           </div>

@@ -62,7 +62,7 @@ get '/main' do
   puts usernameforsearch
 
   @invites = Moodeo.db.get_all_friend_requests_by_user_id(usernameforsearch.id)
-  # @invites_count = @invites.count
+  @invites_count = @invites.count
   erb :main
 end
 
@@ -130,10 +130,15 @@ end
 
 
 get '/listinvites' do
-  usernameforsearch = Moodeo.db.get_user_by_username(@@username)
-  invites = Moodeo.db.get_all_friend_requests_by_user_id(usernameforsearch.id)
-  puts "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-  puts invites
+  @username = session[:username]
+  usernameforsearch = Moodeo.db.get_user_by_username(session[:username])
+  @invites = Moodeo.db.get_all_friend_requests_by_user_id(usernameforsearch.id)
+  @invites_count = @invites.count
+  @actual_invites = @invites.map do |invite|
+    @test = invite.inviter_id
+    @inviter = Moodeo.db.get_user(@test)
+    @inviter_name = @inviter.name
+  end
   erb :listinvites
 end
 
