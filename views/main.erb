@@ -12,7 +12,10 @@
        <!--  <img class="logo" src="img/logo@2x.png" alt width="60" height="75"> -->
         <div id="menuLoggedIn">
           <li>
-            <p>Welcome, <%= @usernamedisplay %></p>
+            <p>Invites: <a href="/listinvites"><%= @invites_count %></a></p>
+          </li>
+          <li>
+            <p>Welcome, <%= @username %></p>
           </li>
             <a href="/home"><button class="btn menu-btn" type="button" data-popup="getstarted">Sign Out</button></a>
         </div>

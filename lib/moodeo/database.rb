@@ -164,6 +164,20 @@ module Moodeo
       end
     end
 
+    def get_all_friend_requests_by_user_id(user_id)
+      rows = @sqlite.execute("SELECT * FROM friend_requests WHERE target_id = ?;", user_id)
+      # Since we are selecting by id, and ids are UNIQUE, we can assume only ONE row is returned
+      data = rows.first
+      if data == nil
+        return []
+      else
+        # Create a convenient FriendRequest object based on the data given to us by SQLite
+        friend_request = FriendRequest.new(data[1], data[2], data[3])
+        friend_request.id = data[0]
+        friend_request
+      end
+    end
+
     def show_all_friend_requests
       result = @sqlite.execute("SELECT * FROM friend_requests")
 

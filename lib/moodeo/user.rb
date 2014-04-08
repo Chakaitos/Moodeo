@@ -8,5 +8,6 @@ class User
     @password = password
     @@counter += 1
     @id = @@counter
+    @invites = []
   end
 end

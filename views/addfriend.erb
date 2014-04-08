@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Moodeo</title>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/media.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/media.css">
   </head>
   <body>
     <div id="header">
@@ -25,11 +25,7 @@
         </div>
         <div class ="mainContent">
           <div class="main-middle-shit">
-            <h1>Account</h1><br/>
-            <h2>Username: <%= @userfound_username %></h2>
-            <h2>Name: <%= @userfound_name %></h2>
-
-            <a href="/addfriend/<%= @userfound_username %>"><button>Add friend</button></a>
+            <h1>Your invite has been sent!</h1>
           </div>
         <div class="imageSideFriends">
           <div class="navMenu expander">
@@ -86,9 +82,6 @@
 
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="js/application.js"></script>
-
-
-    </script>
 
   </body>
 </html>

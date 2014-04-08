@@ -6,6 +6,7 @@ require 'pry-debugger'
 Moodeo.db_name = 'moodeo.db'
 
 set :bind, '0.0.0.0'
+enable :sessions
 
 get '/' do
   erb :home
@@ -15,11 +16,19 @@ get '/signin' do
   erb :signin
 end
 
+
 post '/signin' do
+  puts params
+  puts "at post signin"
+  puts session[:username]
+
   result = Moodeo::SignIn.run(:username => params[:username], :password => params[:password])
   if result.success?
-    @usernamedisplay = params[:username]
-    erb :main
+    puts "Success: #{result.inspect}"
+    puts "Params: #{params[:username]}::#{params.inspect}"
+    session[:username] = params[:username]
+    puts "Session 1: #{session.inspect}"
+    redirect '/main'
   else
     if result.error == :invalid_username
       @message = "Sorry, username is not found"
@@ -30,6 +39,31 @@ post '/signin' do
       puts @message
       erb :signin
   end
+
+  puts "session username at post signin"
+  puts session[:username]
+
+end
+
+get '/main' do
+  puts 'at get main'
+  puts "this is session username: "
+  puts session[:username]
+  puts "Session 2: #{session.inspect}"
+
+  # Redirect to sign in page if user is not signed in
+  if session[:username] == nil
+    redirect '/signin'
+  end
+
+  @username = session[:username]
+
+  usernameforsearch = Moodeo.db.get_user_by_username(@username)
+  puts usernameforsearch
+
+  @invites = Moodeo.db.get_all_friend_requests_by_user_id(usernameforsearch.id)
+  # @invites_count = @invites.count
+  erb :main
 end
 
 get '/signup' do
@@ -79,6 +113,29 @@ get '/profile/:username' do
   end
 end
 
+
+get '/addfriend/:user2' do
+  usernameforsearch = Moodeo.db.get_user_by_username(params[:user2])
+  ourusername = Moodeo.db.get_user_by_username(@@username)
+  if usernameforsearch != nil
+    request = Moodeo.db.friend_request(ourusername.id, usernameforsearch.id, "pending")
+    if request != nil
+      erb :addfriend
+    end
+  else
+    @userfound = "Sorry, User was not found"
+    erb :profile
+  end
+end
+
+
+get '/listinvites' do
+  usernameforsearch = Moodeo.db.get_user_by_username(@@username)
+  invites = Moodeo.db.get_all_friend_requests_by_user_id(usernameforsearch.id)
+  puts "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+  puts invites
+  erb :listinvites
+end
 
 
 # get '/main' do

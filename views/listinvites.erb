@@ -11,6 +11,12 @@
       <div class="grid-container">
        <!--  <img class="logo" src="img/logo@2x.png" alt width="60" height="75"> -->
         <div id="menuLoggedIn">
+          <li>
+            <p>Invites: <a href="/listinvites"><%= @@invites_count %></a></p>
+          </li>
+          <li>
+            <p>Welcome, <%= @@username %></p>
+          </li>
             <a href="/home"><button class="btn menu-btn" type="button" data-popup="getstarted">Sign Out</button></a>
         </div>
       </div>
@@ -25,11 +31,11 @@
         </div>
         <div class ="mainContent">
           <div class="main-middle-shit">
-            <h1>Account</h1><br/>
-            <h2>Username: <%= @userfound_username %></h2>
-            <h2>Name: <%= @userfound_name %></h2>
-
-            <a href="/addfriend/<%= @userfound_username %>"><button>Add friend</button></a>
+            <ul>
+              <% @invites.each do |invite| %>
+                <li><%= invite.something %></li>
+              <% end %>
+            </ul>
           </div>
         <div class="imageSideFriends">
           <div class="navMenu expander">
@@ -37,7 +43,7 @@
               <input type="text" name="search_for_user"/>
             </form>
           </div>
-          <img class"friends-side-bar" src="../img/friendsimage.png">
+          <img class"friends-side-bar" src="img/friendsimage.png">
         </div>
       </div>
     </div>
@@ -86,9 +92,6 @@
 
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="js/application.js"></script>
-
-
-    </script>
 
   </body>
 </html>
